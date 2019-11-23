@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
 
+import { usePosition } from 'use-position';
+import axios from 'axios'
+import { GlobalStyle } from './global';
+import Main from './Components/Main';
+import IconImage from './Components/IconImage';
 function App() {
+
+  const { latitude, longitude} = usePosition(false);
+  const [weather , setWeather] = useState([])
+  const apikey = '639bc0d456b564522009fa1fc1dcedd0'
+
+  useEffect(() => {
+    const getWeater = async () => {
+      await axios.get(`https://api.openweathermap.org/data/2.5/find?lat=${latitude}&lon=${longitude}&APPID=${apikey}`)
+      .then(success => {
+        setWeather([success.data])
+      })
+    }
+    if(usePosition === false) {
+      console.log('habilite a localização')
+    } else {
+       getWeater();
+       console.log(weather)
+    }
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Main>
+      {weather.map((cities, index) => { 
+          return(
+          <div key={cities.list[index].id} className={cities.list[index].weather[index].main}>
+            <IconImage icon={cities.list[index].weather[index].icon} />
+            <span>{parseInt(cities.list[index].main.temp - 273.15) }&#8451;</span>
+            <h2>{cities.list[index].name}</h2>
+          </div>
+          )
+      })}
+     
+    </Main>
+    <GlobalStyle/>
+  </>
   );
 }
 
