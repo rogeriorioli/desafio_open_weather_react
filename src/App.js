@@ -19,17 +19,18 @@ function App() {
       })
     }
     if(usePosition === false) {
-      console.log('habilite a localização')
+    
     } else {
        getWeater();
        console.log(weather)
     }
-  })
+  },[setWeather, latitude, longitude])
 
   return (
     <>
     <Main>
-      {weather.map((cities, index) => { 
+      {usePosition === false ? <h2> ah nao :( </h2>  :
+      weather.map((cities, index) => { 
           return(
           <div key={cities.list[index].id} className={cities.list[index].weather[index].main}>
             <IconImage icon={cities.list[index].weather[index].icon} />
@@ -37,8 +38,8 @@ function App() {
             <h2>{cities.list[index].name}</h2>
           </div>
           )
-      })}
-     
+      })
+      }
     </Main>
     <GlobalStyle/>
   </>
