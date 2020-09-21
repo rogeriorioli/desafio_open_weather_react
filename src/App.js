@@ -24,7 +24,7 @@ function App() {
        getWeater();
        console.log(weather)
     }
-  },[setWeather, latitude, longitude])
+  },[setWeather, weather,  latitude, longitude])
 
   return (
     <>
