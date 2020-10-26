@@ -9,7 +9,7 @@
     "react-icons": "^3.8.0",
     "react-scripts": "3.2.0",
     "styled-components": "^5.0.1",
-    "use-position": "^0.0.6"
+    "use-position": "^0.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
